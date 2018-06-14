@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Лина Эл](https://up.htmlacademy.ru/javascript/14/user/778767).
-* Наставник: `Неизвестно`.
+* Наставник: `Иван Шмидт`.
 
 ---
 

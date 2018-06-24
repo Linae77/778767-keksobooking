@@ -95,7 +95,7 @@ var addElementsDOM = function (items, block1, block2) {
   for (var i = 0; i < items.length; i++) {
     fragment.appendChild(renderOffer(items[i]));
   }
-  if (blok2) {
+  if (block2) {
     var block2List = document.querySelector(block2);
     block2List.insertBefore(fragment, block1List);
   }

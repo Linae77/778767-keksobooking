@@ -26,7 +26,7 @@ var CARD_NUMBER = 8;
 
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
-}
+};
 
 var getUniqueRandoms = function (min, max, number) {
   var m = [];
@@ -40,7 +40,7 @@ var getUniqueRandoms = function (min, max, number) {
     }
   }
   return m;
-}
+};
 
 var getRandomArray = function (min, max, arrElements) {
   var n = getRandomInt(min, max); // случайное количество элементов массива
@@ -48,7 +48,7 @@ var getRandomArray = function (min, max, arrElements) {
     randomArray[i] = arrElements[getUniqueRandoms(min, max, n)[i]];
   }
   return randomArray;
-}
+};
 // функция создания основного массив
 var createItems = function (number) {
   var mainItems = [];
@@ -65,7 +65,7 @@ var createItems = function (number) {
         guests: getRandomInt(1, 5),
         checkin: TIMES[getRandomInt(0, 2)],
         checkout: TIMES[getRandomInt(0, 2)],
-        features: getRandomArray(1, 6, FEATURES_ELEMENTS), // массив строк случайной длины из заданного набора значений
+        features: getRandomArray(1, 6, FEATURES), // массив строк случайной длины из заданного набора значений
         description: '',
         photos: getRandomArray(1, 3, PHOTOS)},
       location: {x: x, y: y}
@@ -92,16 +92,14 @@ var renderOffer = function (item) {
 var addElementsDOM = function (items, block1, block2) {
   var block1List = document.querySelector(block1);
   var fragment = document.createDocumentFragment();
-  for (i = 0; i < items.length; i++) {
+  for (var i = 0; i < items.length; i++) {
     fragment.appendChild(renderOffer(items[i]));
-  };
-  if (blok2)
-  {
+  }
+  if (blok2) {
     var block2List = document.querySelector(block2);
     block2List.insertBefore(fragment, block1List);
   }
-  else
-  {
+  else {
     block1List.appendChild(fragment);
   }
 };
@@ -117,9 +115,14 @@ mapElement.querySelector('.popup__text--price').textContent = offers[0].offer.pr
 var getTypeRoom = function (offersType) {
   var accommodationType;
   switch (offersType) {
-    case 'flat': accommodationType = 'Квартира';
-    case 'bungalo': accommodationType = 'Бунгало';
+    case 'flat':
+      accommodationType = 'Квартира';
+      break;
+    case 'bungalo':
+      accommodationType = 'Бунгало';
+      break;
     case 'house': accommodationType = 'Дом';
+      break;
     case 'palace': accommodationType = 'Дворец';
   }
   return accommodationType;

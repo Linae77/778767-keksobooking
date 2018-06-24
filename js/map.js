@@ -76,7 +76,7 @@ function createPins(pinsNumber) {
         features: features, // массив строк случайной длины из заданного набора значений
         description: description,
         photos: PHOTOS[getRandomInt(0, 2)]},
-      "location": {x, y}}
+      "location": {x: x, y: y}}
   }
   return pins;
 };
@@ -90,7 +90,7 @@ var similarPin = document.querySelector('.map__card');
 // функция создания DOM-элементов, соответствующих меткам на карте и заполнения их данными из массива
 var renderPin = function (pin) {
   var mapElement = similarPin.cloneNode(true);
-  mapElement.querySelector('.map').style = "left: {{location.x}}px; top: {{location.y}}px;";
+  mapElement.querySelector('.map').style = "left: location.x px; top: location.y px";
   mapElement.querySelector('.map').src = pin.author.avatar;
   mapElement.querySelector('.map').alt = pin.title;
 };

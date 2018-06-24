@@ -14,7 +14,7 @@ var TITLES = ['Большая уютная квартира',
   'Красивый гостевой домик',
   'Некрасивый негостеприимный домик',
   'Уютное бунгало далеко от моря',
-  'Неуютное бунгало по колено в воде"];
+  'Неуютное бунгало по колено в воде'];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var CHECKINS = ['12:00', '13:00', '14:00'];
 var CHECKOUTS = ['12:00', '13:00', '14:00'];
@@ -53,30 +53,23 @@ function getRandomArray(min, max, arrElements) {
 (function createPins(8) {
   var pins = [];
   for (var i = 0; i < 8; i++) {
-    var blocWidth = 600; // размер блока ???
-    var x = getRandomInt(0, blocWidth); // ограничено размерами блока, в котором перетаскивается метка ???
+    var x = getRandomInt(300, 900); // ограничено размерами блока, в котором перетаскивается метка ???
     var y = getRandomInt(130, 630);
-    var location = {x: x, y: y};
-    var address = {x: location.x, y: location.y};
-    var price = getRandomInt(1000, 1000000);
-    var description = ' ';
-    var rooms = getRandomInt(1, 5);
-    var guests = getRandomInt(1, 3) * rooms;
-    var features = getRandomArray(0, 6, FEATURES_ELEMENTS);
     pins[i] = {
-      'author': AVATARS[i],
-      'offer': {title: TITLES[getUniqueRandoms(0, TITLES.length - 1, 8)[i]], // значения не должны повторяться
-        address: address,
-        price: price,
+      author: {avatar: AVATARS[i]},
+      offer: {title: TITLES[getUniqueRandoms(0, TITLES.length - 1, 8)[i]], // значения не должны повторяться
+        address: x + ',' + y,
+        price: getRandomInt(1000, 1000000),
         type: TYPES[getRandomInt(0, 3)],
-        rooms: rooms,
-        guests: guests,
+        rooms: getRandomInt(1, 5),
+        guests: getRandomInt(1, 5),
         checkin: CHECKINS[getRandomInt(0, 2)],
         checkout: CHECKOUTS[getRandomInt(0, 2)],
-        features: features, // массив строк случайной длины из заданного набора значений
-        description: description,
+        features: getRandomArray(0, 6, FEATURES_ELEMENTS), // массив строк случайной длины из заданного набора значений
+        description: '',
         photos: PHOTOS[getRandomInt(0, 2)]},
-      'location': {x: x, y: y}};
+      location: {x: x, y: y}
+    };
   }
   return pins;
 })()

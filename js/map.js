@@ -68,7 +68,7 @@ for (var i = 0; i < 8; i++) {
       photos: PHOTOS[getRandomInt(0, 2)]},
     location: {x: x, y: y}
   };
-};
+}
 // убираем класс  .map--faded у блока .map
 var mapItems = document.querySelector('.map');
 mapItems.classList.remove('map--faded');
@@ -85,7 +85,7 @@ var renderPin = function (pin) {
 // добавляем их в блок .map__pins с использованием DocumentFragment
 var mapPinList = document.querySelector('.map__pin');
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < 8; i++) {
+for (i = 0; i < 8; i++) {
   fragment.appendChild(renderPin(pins[i]));
 }
 mapPinList.appendChild(fragment);

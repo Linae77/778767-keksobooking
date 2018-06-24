@@ -50,7 +50,7 @@ function getRandomArray(min, max, arrElements) {
 }
 // создаем массив из 8 элементов
 // IIFE фукнция
-(function createPins(8) {
+(function createPins() {
   var pins = [];
   for (var i = 0; i < 8; i++) {
     var x = getRandomInt(300, 900); // ограничено размерами блока, в котором перетаскивается метка ???

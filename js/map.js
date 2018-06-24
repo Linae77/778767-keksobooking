@@ -29,7 +29,7 @@ function getRandomInt(min, max) {
 
 function getUniqueRandoms(min, max, number) {
   var m = [];
-  var m[0] = Math.floor(Math.random() * (max - min)) + min;
+  m[0] = Math.floor(Math.random() * (max - min)) + min;
   for (var i = 1; i < number; i++) {
     m[i] = Math.floor(Math.random() * (max - min)) + min;
     for (var j = 0; j < i; j++) {

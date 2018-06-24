@@ -65,17 +65,17 @@ function createPins(pinsNumber) {
     var features = getRandomArray(0, 6, FEATURES_ELEMENTS);
     pins[i] = {
       "author": AVATARS[i],
-      "offer": {TITLES[getUniqueRandoms(0, TITLES.length - 1, pinsNumber)[i]], // значения не должны повторяться
-        address,
-        price,
-        TYPES[getRandomInt(0, 3)],
-        rooms,
-        guests,
-        CHECKINS[getRandomInt(0, 2)],
-        CHECKOUTS[getRandomInt(0, 2)],
-        features, // массив строк случайной длины из заданного набора значений
-        description,
-        PHOTOS[getRandomInt(0, 2)]},
+      "offer": {title: TITLES[getUniqueRandoms(0, TITLES.length - 1, pinsNumber)[i]], // значения не должны повторяться
+        address: address,
+        price: price,
+        type: TYPES[getRandomInt(0, 3)],
+        rooms: rooms,
+        guests: guests,
+        checkin: CHECKINS[getRandomInt(0, 2)],
+        checkout: CHECKOUTS[getRandomInt(0, 2)],
+        features: features, // массив строк случайной длины из заданного набора значений
+        description: description,
+        photos: PHOTOS[getRandomInt(0, 2)]},
       "location": {x, y}}
   }
   return pins;

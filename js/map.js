@@ -56,8 +56,8 @@ function createPins(pinsNumber) {
     var blocWidth = 600; // размер блока ???
     var x = getRandomInt(0, blocWidth); // ограничено размерами блока, в котором перетаскивается метка ???
     var y = getRandomInt(130, 630);
-    var location = {x, y};
-    var address = '{location.x, location.y}';
+    var location = {x: x, y: y};
+    var address = '{x: location.x, y: location.y}';
     var price = getRandomInt(1000, 1000000);
     var description = ' ';
     var rooms = getRandomInt(1, 5);

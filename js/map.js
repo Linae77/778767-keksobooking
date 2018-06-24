@@ -49,31 +49,26 @@ function getRandomArray(min, max, arrElements) {
   return randomArray;
 }
 // создаем массив из 8 элементов
-// IIFE фукнция
-(function createPins() {
-  var pins = [];
-  for (var i = 0; i < 8; i++) {
-    var x = getRandomInt(300, 900); // ограничено размерами блока, в котором перетаскивается метка ???
-    var y = getRandomInt(130, 630);
-    pins[i] = {
-      author: {avatar: AVATARS[i]},
-      offer: {title: TITLES[getUniqueRandoms(0, TITLES.length - 1, 8)[i]], // значения не должны повторяться
-        address: x + ',' + y,
-        price: getRandomInt(1000, 1000000),
-        type: TYPES[getRandomInt(0, 3)],
-        rooms: getRandomInt(1, 5),
-        guests: getRandomInt(1, 5),
-        checkin: CHECKINS[getRandomInt(0, 2)],
-        checkout: CHECKOUTS[getRandomInt(0, 2)],
-        features: getRandomArray(0, 6, FEATURES_ELEMENTS), // массив строк случайной длины из заданного набора значений
-        description: '',
-        photos: PHOTOS[getRandomInt(0, 2)]},
-      location: {x: x, y: y}
-    };
-  }
-  return pins;
-})()
-
+var pins = [];
+for (var i = 0; i < 8; i++) {
+  var x = getRandomInt(300, 900); // ограничено размерами блока, в котором перетаскивается метка ???
+  var y = getRandomInt(130, 630);
+  pins[i] = {
+    author: {avatar: AVATARS[i]},
+    offer: {title: TITLES[getUniqueRandoms(0, TITLES.length - 1, 8)[i]], // значения не должны повторяться
+      address: x + ',' + y,
+      price: getRandomInt(1000, 1000000),
+      type: TYPES[getRandomInt(0, 3)],
+      rooms: getRandomInt(1, 5),
+      guests: getRandomInt(1, 5),
+      checkin: CHECKINS[getRandomInt(0, 2)],
+      checkout: CHECKOUTS[getRandomInt(0, 2)],
+      features: getRandomArray(0, 6, FEATURES_ELEMENTS), // массив строк случайной длины из заданного набора значений
+      description: '',
+      photos: PHOTOS[getRandomInt(0, 2)]},
+    location: {x: x, y: y}
+  };
+};
 // убираем класс  .map--faded у блока .map
 var mapItems = document.querySelector('.map');
 mapItems.classList.remove('map--faded');

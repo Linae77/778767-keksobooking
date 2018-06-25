@@ -98,8 +98,7 @@ var addElementsDOM = function (items, block1, block2) {
   if (block2) {
     var block2List = document.querySelector(block2);
     block2List.insertBefore(fragment, block1List);
-  }
-  else {
+  } else {
     block1List.appendChild(fragment);
   }
 };

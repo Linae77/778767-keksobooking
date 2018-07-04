@@ -43,14 +43,12 @@ var cardTemplate = document.querySelector('#pin__template').content.querySelecto
 var photosListElement = cardTemplate.querySelector('.popup__photos');
 var featuresListElement = cardTemplate.querySelector('.popup__features');
 
-// шаблон для пина
+var mapPins = document.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin__template').content.querySelector('.map__pin');
 // элементы формы карточки объявления
 var adForm = document.querySelector('.ad-form');
 var adFormFieldset = adForm.querySelectorAll('fieldset');
 var inputAddress = adForm.querySelector('#address');
-
-
 
 // Вспомогательные функции
 // Генерация случайного целого в заданном диапазоне
@@ -132,20 +130,6 @@ var createAdds = function (number) {
   return mainItems;
 };
 
-// Функция создания по шаблону DOM-элемента метки
-var renderPin = function (pin) {
-  var pinElement = pinTemplate.cloneNode(true);
-  var pinAvatarElement = pinElement.querySelector('img');
-  pinElement.querySelector('.map').style.left = pin.location.x - (PIN_WIDTH / 2) + 'px';
-  pinElement.querySelector('.map').style.top = pin.location.y + PIN_HEIGHT + 'px';
-  pinAvatarElement.querySelector('.map').src = pin.author.avatar;
-  pinAvatarElement.querySelector('.map').alt = pin.offer.title;
-  pinElement.addEventListener('click', function () {
-    openMapCard(pin);
-  });
-  return pinElement;
-};
-
 // Функция удаления потомков
 var deleteChildElement = function (parent) {
   while (parent.firstChild) {
@@ -186,16 +170,6 @@ var fillFeatures = function (features) {
   }
 };
 
-/*// Заполнение карты DOM-элементами на основе массива с метками
-var fillMap = function () {
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < ads.length; i++) {
-    fragment.appendChild(renderPin(ads[i]));
-    pinsLocationElement.appendChild(fragment);
-  }
-};
-*/
-
 // Получение адреса метки на карте
 var getAddress = function () {
   var addressX = Math.round(mainPinElement.style.left + MAIN_PIN_WIDTH / 2);
@@ -204,35 +178,46 @@ var getAddress = function () {
     x: addressX,
     y: addressY
   };
-  return coord;
+  return coord.x + ', ' + coord.y;;
 };
 
-var setAddress = function (address) {
-  inputAddress.value = address.x + ', ' + address.y;
+// Функция создания по шаблону DOM-элемента метки
+var renderPin = function (pin) {
+  var pinElement = pinTemplate.cloneNode(true);
+  var pinAvatarElement = pinElement.querySelector('img');
+  pinElement.querySelector('.map').style.left = pin.location.x - (PIN_WIDTH / 2) + 'px';
+  pinElement.querySelector('.map').style.top = pin.location.y + PIN_HEIGHT + 'px';
+  pinAvatarElement.querySelector('.map').src = pin.author.avatar;
+  pinAvatarElement.querySelector('.map').alt = pin.offer.title;
+  pinElement.addEventListener('click', function () {
+    openMapCard(pin);
+  });
+  return pinElement;
 };
 
-/* убираем активацию карты из задания module3-task1
-// временно убираем класс  .map--faded у блока .map
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
-*/
-
-/* универсальная функция, здесь не используется
-// Функция заполнения карты DOM-элементами в блок1 перед блоком2 с использованием DocumentFragment
-var addElementsDOM = function (items, block1, block2) {
- var block1List = document.querySelector(block1);
- var fragment = document.createDocumentFragment();
- for (var i = 0; i < items.length; i++) {
-	 fragment.appendChild(renderPin(items[i]));
- }
- if (block2) {
-	 var block2List = document.querySelector(block2);
-	 block2List.insertBefore(fragment, block1List);
- } else {
- block1List.appendChild(fragment);
- }
+// Заполнение карты DOM-элементами на основе массива с объектами
+var fillMap = function () {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < ads.length; i++) {
+    fragment.appendChild(renderPin(ads[i]));
+    mapPins.appendChild(fragment);
+  }
 };
-*/
+
+// Функция помещения объявления в разметку (показа на карте)
+// открываем соответствующее объявление, закрываем предыдущее открытое при наличии
+var openMapCard = function (ad) {
+  getАccommodationType(ad);
+  fillFeatures(ad, ad.offer.features);
+  fillPhotos(ad, ad.offer.photos);
+  var mapCardElement = mapElement.querySelector('.map__card');
+  if (mapCardElement) {
+    closeMapCard();
+  }
+  var fragment = document.createDocumentFragment();
+  fragment.appendChild(createMapCard(ad));
+  mapElement.insertBefore(createMapCard(ad), mapFilters);
+};
 
 // Функция создания DOM-элемента объявления
 var createMapCard = function (ad) {
@@ -250,21 +235,6 @@ var createMapCard = function (ad) {
   });
   document.addEventListener('keydown', onMapCardEscPress);
   return mapCardElement;
-};
-
-// Функция помещения объявления в разметку (показа на карте)
-// открываем соответствующее объявление, закрываем предыдущее открытое при наличии
-var openMapCard = function (ad) {
-  getАccommodationType(ad);
-  fillFeatures(ad, ad.offer.features);
-  fillPhotos(ad, ad.offer.photos);
-  var mapCardElement = mapElement.querySelector('.map__card');
-  if (mapCardElement) {
-    closeMapCard();
-  }
-  var fragment = document.createDocumentFragment();
-  fragment.appendChild(createMapCard(ad));
-  mapElement.insertBefore(createMapCard(ad), mapFilters);
 };
 
 // Закрытие формы с объявлением
@@ -301,14 +271,14 @@ var disableForm = function () {
   });
 };
 disableForm();
-
+// Cоздаем массив объявлений
+ads = createAdds(ADS_NUMBER);
 // Обработчик события - перемещения главной метки
 var onMoveMouseupHandler = function () {
   activateMap();
   activateForm();
-  setAddress(getAddress());
-  ads = createAdds(ADS_NUMBER);
-  openMapCard();
+  getAddress();
+  fillMap();
   mainPinElement.removeEventListener('mouseup', onMoveMouseupHandler);
 };
 // Обработчик, активирующий страницу

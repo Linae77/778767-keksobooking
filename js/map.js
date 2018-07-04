@@ -34,6 +34,29 @@ var PHOTO_HEIGHT = 40;
 
 var ESC_KEYCODE = 27;
 
+var RENT_VALUE = {
+  flat: {
+    min: 1000,
+    max: 1000000,
+    placeholder: 1000
+  },
+  house: {
+    min: 5000,
+    max: 1000000,
+    placeholder: 5000
+  },
+  palace: {
+    min: 10000,
+    max: 1000000,
+    placeholder: 10000
+  },
+  bungalo: {
+    min: 0,
+    max: 1000000,
+    placeholder: 0
+  }
+};
+
 // Необходимые элементы
 var mapElement = document.querySelector('.map');
 var mapFilters = mapElement.querySelector('.map__filters-container');
@@ -181,8 +204,8 @@ var fillFeatures = function (features) {
 
 // Получение адреса метки на карте
 var getAddress = function () {
-  var addressX = Math.round(mainPinElement.style.left + MAIN_PIN_WIDTH / 2);
-  var addressY = Math.round(mainPinElement.style.top + MAIN_PIN_HEIGHT / 2);
+  var addressX = Math.round(mainPinElement.offsetLeft + MAIN_PIN_WIDTH / 2);
+  var addressY = Math.round(mainPinElement.offsetTop + MAIN_PIN_HEIGHT / 2);
   var coord = {
     x: addressX,
     y: addressY
@@ -279,7 +302,7 @@ var disableForm = function () {
     item.setAttribute('disabled', 'disabled');
   });
 };
-disableForm();
+
 // Cоздаем массив объявлений
 ads = createAdds(ADS_NUMBER);
 // Обработчик события - перемещения главной метки
@@ -292,3 +315,123 @@ var onMoveMouseupHandler = function () {
 };
 // Обработчик, активирующий страницу
 mainPinElement.addEventListener('mouseup', onMoveMouseupHandler);
+
+// Валидация формы
+var inputTitleFormElement = advertFormElement.querySelector('#title');
+var inputTypeFormElement = advertFormElement.querySelector('#type');
+var inputPriceFormElement = advertFormElement.querySelector('#price');
+var inputTimeInFormElement = advertFormElement.querySelector('#timein');
+var inputTimeOutFormElement = advertFormElement.querySelector('#timeout');
+var inputRoomsFormElement = advertFormElement.querySelector('#room_number');
+var inputCapacityFormElement = advertFormElement.querySelector('#capacity');
+
+var resetElement = adForm.querySelector('.ad-form__reset');
+
+// Добавление рамки невалидным полям
+var fieldInvalidHandler = function (evt) {
+  var target = evt.target;
+  target.classList.add('invalid');
+  checkValidity();
+  };
+
+// Проверка на валидность поля
+var checkValidity = function () {
+  var checkedField = adForm.querySelector('.invalid');
+  if (checkedField.validity.valid) {
+    checkedField.classList.remove('invalid');
+  }
+};
+
+// Установка обязательных полей
+var setFieldsRequired = function () {
+  inputTitleFormElement.required = true;
+  inputPriceFormElement.required = true;
+};
+
+// Изменение значения минимальной цены и плейсхолдера в зависимости от типа жилья
+var setPrice = function () {
+  var offerType = inputTypeFormElement.value;
+  inputPriceFormElement.min = RENT_VALUE[offerType].min;
+  inputPriceFormElement.max = RENT_VALUE[offerType].max;
+  inputPriceFormElement.placeholder = RENT_VALUE[offerType].placeholder;
+};
+
+// Синхронизация количества комнат и количества гостей
+var checkRoomsAndGuests = function () {
+  if ((inputRoomsFormElement.value === '100') && (inputCapacityFormElement.value !== '0')) {
+    inputCapacityFormElement.setCustomValidity('Не для гостей!');
+  } else if ((inputRoomsFormElement.value !== '100') && (inputCapacityFormElement.value === '0')) {
+    inputCapacityFormElement.setCustomValidity('Выберите корректный вариант!');
+  } else if (inputRoomsFormElement.value < inputCapacityFormElement.value) {
+    inputCapacityFormElement.setCustomValidity('Недостаточное кол-во комнат для размещения гостей');
+  } else {
+    inputCapacityFormElement.setCustomValidity('');
+  }
+};
+
+// Синхронизация времени заезда и выезда
+var synchronizeTime = function (targetElement, mainElement) {
+  targetElement.value = mainElement.value;
+};
+
+// Обработчики событий изменения полей формы и проверка на валидность
+inputCapacityFormElement.addEventListener('change', function () {
+  checkRoomsAndGuests();
+  checkValidity();
+});
+
+inputRoomsFormElement.addEventListener('change', function () {
+  checkRoomsAndGuests();
+  checkValidity();
+});
+
+inputTypeFormElement.addEventListener('change', setPrice);
+inputTimeInFormElement.addEventListener('change', function () {
+  setTime(inputTimeOutFormElement, inputTimeInFormElement);
+});
+
+inputTimeOutFormElement.addEventListener('change', function () {
+  setTime(inputTimeInFormElement, inputTimeOutFormElement);
+});
+
+inputTitleFormElement.addEventListener('change', function () {
+  checkValidity();
+});
+
+inputTypeFormElement.addEventListener('change', function () {
+  changePriceValue();
+  checkValidity();
+});
+
+inputPriceFormElement.addEventListener('change', function () {
+  checkValidity();
+});
+
+adForm.addEventListener('invalid', fieldInvalidHandler, true);
+
+// Удаление меток похожих объявлений с карты
+var clearMap = function () {
+var pinElement = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
+  for (var i = 0; i < pinElement.length; i++) {
+    mapPins.removeChild(pinElement[i]);
+  }
+};
+
+resetElement.addEventListener('click', function () {
+  disableForm();
+  getAddress();
+  clearMap();
+  var popupElement = mapElement.querySelector('.map__card');
+    if (popupElement) {
+      closeMapCard();
+     }
+    adForm.reset();
+});
+
+// Функция активации страницы
+var initiatePage = function () {
+  disableForm();
+  getAddress();
+  mainPinElement.addEventListener('mouseup', onMoveMouseupHandler);
+};
+initiatePage();

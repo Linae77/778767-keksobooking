@@ -1216,3 +1216,8 @@ fieldset {
       -ms-transform: translateX(-50%);
           transform: translateX(-50%);
 }
+
+.ad-form .invalid {
+  border: 3px solid red !important;
+  border-radius: 10px !important;
+}

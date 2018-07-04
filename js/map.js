@@ -117,7 +117,7 @@ var createAdds = function (number) {
         address: x + ',' + y,
         price: getRandomInt(1000, 1000000),
         type: TYPES[getRandomInt(0, TYPES.length - 1)],
-        rooms: getRandomInt(1, ),
+        rooms: getRandomInt(1, 5),
         guests: getRandomInt(1, 5),
         checkin: TIMES[getRandomInt(0, TIMES.length - 1)],
         checkout: checkin,

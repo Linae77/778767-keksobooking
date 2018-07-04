@@ -28,27 +28,29 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var MAIN_PIN_WIDTH = 65;
 var MAIN_PIN_HEIGHT = 65;
-var MAIN_PIN_TIP = 22;
+// var MAIN_PIN_TIP = 22;
 var PHOTO_WIDTH = 45;
 var PHOTO_HEIGHT = 40;
 
 var ESC_KEYCODE = 27;
 
 // Необходимые элементы
-var mapElement = document.querySelector('.map')
+var mapElement = document.querySelector('.map');
 var mapFilters = mapElement.querySelector('.map__filters-container');
 var mainPinElement = document.querySelector('.map__pin--main');
 // шаблон для создания карточки объявления
 var cardTemplate = document.querySelector('#pin__template').content.querySelector('.map__card');
 var photosListElement = cardTemplate.querySelector('.popup__photos');
 var featuresListElement = cardTemplate.querySelector('.popup__features');
-var typeElement = cardTemplate.querySelector('.popup__type');
-// шаблон для пина - кончика указателя метки
+
+// шаблон для пина
 var pinTemplate = document.querySelector('#pin__template').content.querySelector('.map__pin');
 // элементы формы карточки объявления
-var formElement = document.querySelector('.ad-form');
-var fieldsetElements = formElement.querySelectorAll('fieldset');
-var inputAddress = formElement.querySelector('#address');
+var adForm = document.querySelector('.ad-form');
+var adFormFieldset = adForm.querySelectorAll('fieldset');
+var inputAddress = adForm.querySelector('#address');
+
+
 
 // Вспомогательные функции
 // Генерация случайного целого в заданном диапазоне
@@ -75,7 +77,7 @@ var getUniqueRandoms = function (min, max, number) {
 var getRandomLengthArray = function (array) {
   var n = getRandomInt(0, array.length); // случайное количество элементов массива
   for (var i = 0, randomArray = []; i < n; i++) {
-    randomArray[i] = arrElements[getUniqueRandoms(0, array.length - 1, n)[i]];
+    randomArray[i] = array[getUniqueRandoms(0, array.length - 1, n)[i]];
   }
   return randomArray;
 };
@@ -93,7 +95,7 @@ var shuffleArray = function (array) {
 
 // Получение типа жилья
 var getАccommodationType = function (type) {
-  switch (offersType) {
+  switch (type) {
     case 'flat': return 'Квартира';
     case 'bungalo': return 'Бунгало';
     case 'house': return 'Дом';
@@ -104,7 +106,7 @@ var getАccommodationType = function (type) {
 // Функция создания основного массива объявлений
 var createAdds = function (number) {
   var mainItems = [];
-  var TITLES_Indexes = getUniqueRandoms(0, TITLES.length - 1, 8); // массив уникальных индексов TITLES в случайном порядке
+  var TITLES_INDEXES = getUniqueRandoms(0, TITLES.length - 1, 8); // массив уникальных индексов TITLES в случайном порядке
   for (var i = 0; i < number; i++) {
     var x = getRandomInt(300, 900); // ограничено размерами блока, в котором перетаскивается метка
     var y = getRandomInt(130, 630);
@@ -113,14 +115,14 @@ var createAdds = function (number) {
         avatar: AVATARS[i]
       },
       offer: {
-        title: TITLES[TITLES_Indexes[i]], // значения не повторяются
+        title: TITLES[TITLES_INDEXES[i]], // значения не повторяются
         address: x + ',' + y,
         price: getRandomInt(1000, 1000000),
         type: TYPES[getRandomInt(0, TYPES.length - 1)],
         rooms: getRandomInt(1, 5),
         guests: getRandomInt(1, 5),
         checkin: TIMES[getRandomInt(0, TIMES.length - 1)],
-        checkout: checkin,
+        checkout: TIMES[getRandomInt(0, TIMES.length - 1)],
         features: getRandomLengthArray(FEATURES), // массив строк случайной длины из заданного набора значений
         description: '',
         photos: shuffleArray(PHOTOS)},
@@ -184,7 +186,7 @@ var fillFeatures = function (features) {
   }
 };
 
-// Заполнение карты DOM-элементами на основе массива с метками
+/*// Заполнение карты DOM-элементами на основе массива с метками
 var fillMap = function () {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < ads.length; i++) {
@@ -192,7 +194,7 @@ var fillMap = function () {
     pinsLocationElement.appendChild(fragment);
   }
 };
-
+*/
 
 // Получение адреса метки на карте
 var getAddress = function () {
@@ -202,7 +204,7 @@ var getAddress = function () {
     x: addressX,
     y: addressY
   };
-  return coord
+  return coord;
 };
 
 var setAddress = function (address) {
@@ -281,20 +283,20 @@ var onMapCardEscPress = function (evt) {
 
 // Функция активации карты
 var activateMap = function () {
-  map.classList.remove('map--faded');
+  mapElement.classList.remove('map--faded');
 };
 
 // Функция активации формы объявления
 var activateForm = function () {
   adForm.classList.remove('ad-form--disabled');
-  adFormFieldsets.forEach(function (item) {
+  adFormFieldset.forEach(function (item) {
     item.removeAttribute('disabled');
-  })
+  });
 };
 
 // Изначальное состояние карты - добавляем полям атрибут disabled
 var disableForm = function () {
-  adFormFieldsets.forEach(function (item) {
+  adFormFieldset.forEach(function (item) {
     item.setAttribute('disabled', 'disabled');
   });
 };

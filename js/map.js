@@ -73,13 +73,13 @@ var adForm = document.querySelector('.ad-form');
 var adFormFieldset = adForm.querySelectorAll('fieldset');
 var inputAddress = adForm.querySelector('#address');
 
-var inputTitleFormElement = advertFormElement.querySelector('#title');
-var inputTypeFormElement = advertFormElement.querySelector('#type');
-var inputPriceFormElement = advertFormElement.querySelector('#price');
-var inputTimeInFormElement = advertFormElement.querySelector('#timein');
-var inputTimeOutFormElement = advertFormElement.querySelector('#timeout');
-var inputRoomsFormElement = advertFormElement.querySelector('#room_number');
-var inputCapacityFormElement = advertFormElement.querySelector('#capacity');
+var inputTitleFormElement = adForm.querySelector('#title');
+var inputTypeFormElement = adForm.querySelector('#type');
+var inputPriceFormElement = adForm.querySelector('#price');
+var inputTimeInFormElement = adForm.querySelector('#timein');
+var inputTimeOutFormElement = adForm.querySelector('#timeout');
+var inputRoomsFormElement = adForm.querySelector('#room_number');
+var inputCapacityFormElement = adForm.querySelector('#capacity');
 
 var resetElement = adForm.querySelector('.ad-form__reset');
 
@@ -332,7 +332,7 @@ var fieldInvalidHandler = function (evt) {
   var target = evt.target;
   target.classList.add('invalid');
   checkValidity();
-  };
+};
 
 // Проверка на валидность поля
 var checkValidity = function () {
@@ -387,11 +387,11 @@ inputRoomsFormElement.addEventListener('change', function () {
 
 inputTypeFormElement.addEventListener('change', setPrice);
 inputTimeInFormElement.addEventListener('change', function () {
-  setTime(inputTimeOutFormElement, inputTimeInFormElement);
+  synchronizeTime(inputTimeOutFormElement, inputTimeInFormElement);
 });
 
 inputTimeOutFormElement.addEventListener('change', function () {
-  setTime(inputTimeInFormElement, inputTimeOutFormElement);
+  synchronizeTime(inputTimeInFormElement, inputTimeOutFormElement);
 });
 
 inputTitleFormElement.addEventListener('change', function () {
@@ -399,7 +399,7 @@ inputTitleFormElement.addEventListener('change', function () {
 });
 
 inputTypeFormElement.addEventListener('change', function () {
-  changePriceValue();
+  setPrice();
   checkValidity();
 });
 
@@ -411,7 +411,7 @@ adForm.addEventListener('invalid', fieldInvalidHandler, true);
 
 // Удаление меток похожих объявлений с карты
 var clearMap = function () {
-var pinElement = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
+  var pinElement = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
   for (var i = 0; i < pinElement.length; i++) {
     mapPins.removeChild(pinElement[i]);
   }
@@ -422,10 +422,10 @@ resetElement.addEventListener('click', function () {
   getAddress();
   clearMap();
   var popupElement = mapElement.querySelector('.map__card');
-    if (popupElement) {
-      closeMapCard();
-     }
-    adForm.reset();
+  if (popupElement) {
+    closeMapCard();
+  }
+  adForm.reset();
 });
 
 // Функция активации страницы

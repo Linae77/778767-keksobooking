@@ -99,15 +99,15 @@ var getАccommodationType = function (type) {
       accommodationType = 'Квартира';
       break;
     case 'bungalo':
-      accommodationType =  'Бунгало';
+      accommodationType = 'Бунгало';
       break;
     case 'house':
-      accommodationType =  'Дом';
+      accommodationType = 'Дом';
       break;
     case 'palace':
-      accommodationType =  'Дворец';
+      accommodationType = 'Дворец';
   }
-  return accommodationType
+  return accommodationType;
 };
 
 // Функция создания основного массива объявлений

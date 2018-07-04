@@ -93,12 +93,21 @@ var shuffleArray = function (array) {
 
 // Получение типа жилья
 var getАccommodationType = function (type) {
+  var accommodationType;
   switch (type) {
-    case 'flat': return 'Квартира';
-    case 'bungalo': return 'Бунгало';
-    case 'house': return 'Дом';
-    case 'palace': return 'Дворец';
+    case 'flat':
+      accommodationType = 'Квартира';
+      break;
+    case 'bungalo':
+      accommodationType =  'Бунгало';
+      break;
+    case 'house':
+      accommodationType =  'Дом';
+      break;
+    case 'palace':
+      accommodationType =  'Дворец';
   }
+  return accommodationType
 };
 
 // Функция создания основного массива объявлений
@@ -178,7 +187,7 @@ var getAddress = function () {
     x: addressX,
     y: addressY
   };
-  return coord.x + ', ' + coord.y;;
+  return coord.x + ', ' + coord.y;
 };
 
 // Функция создания по шаблону DOM-элемента метки
@@ -277,7 +286,7 @@ ads = createAdds(ADS_NUMBER);
 var onMoveMouseupHandler = function () {
   activateMap();
   activateForm();
-  getAddress();
+  inputAddress.value = getAddress();
   fillMap();
   mainPinElement.removeEventListener('mouseup', onMoveMouseupHandler);
 };

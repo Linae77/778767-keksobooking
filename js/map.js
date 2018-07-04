@@ -399,7 +399,7 @@ inputTitleFormElement.addEventListener('change', function () {
 });
 
 inputTypeFormElement.addEventListener('change', function () {
-  setFieldsRequired;
+  setFieldsRequired();
   setPrice();
   checkValidity();
 });

@@ -73,6 +73,16 @@ var adForm = document.querySelector('.ad-form');
 var adFormFieldset = adForm.querySelectorAll('fieldset');
 var inputAddress = adForm.querySelector('#address');
 
+var inputTitleFormElement = advertFormElement.querySelector('#title');
+var inputTypeFormElement = advertFormElement.querySelector('#type');
+var inputPriceFormElement = advertFormElement.querySelector('#price');
+var inputTimeInFormElement = advertFormElement.querySelector('#timein');
+var inputTimeOutFormElement = advertFormElement.querySelector('#timeout');
+var inputRoomsFormElement = advertFormElement.querySelector('#room_number');
+var inputCapacityFormElement = advertFormElement.querySelector('#capacity');
+
+var resetElement = adForm.querySelector('.ad-form__reset');
+
 // Вспомогательные функции
 // Генерация случайного целого в заданном диапазоне
 var getRandomInt = function (min, max) {
@@ -317,16 +327,6 @@ var onMoveMouseupHandler = function () {
 mainPinElement.addEventListener('mouseup', onMoveMouseupHandler);
 
 // Валидация формы
-var inputTitleFormElement = advertFormElement.querySelector('#title');
-var inputTypeFormElement = advertFormElement.querySelector('#type');
-var inputPriceFormElement = advertFormElement.querySelector('#price');
-var inputTimeInFormElement = advertFormElement.querySelector('#timein');
-var inputTimeOutFormElement = advertFormElement.querySelector('#timeout');
-var inputRoomsFormElement = advertFormElement.querySelector('#room_number');
-var inputCapacityFormElement = advertFormElement.querySelector('#capacity');
-
-var resetElement = adForm.querySelector('.ad-form__reset');
-
 // Добавление рамки невалидным полям
 var fieldInvalidHandler = function (evt) {
   var target = evt.target;

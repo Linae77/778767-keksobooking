@@ -24,10 +24,10 @@
     }
   };
 
+  var mapElement = document.querySelector('.map');
+  var adForm = document.querySelector('.ad-form');
+  var mainPinElement = document.querySelector('.map__pin--main');
   // Элементы формы карточки объявления
-
-  var adForm = window.data.adForm;
-
   var inputTitleFormElement = adForm.querySelector('#title');
   var inputTypeFormElement = adForm.querySelector('#type');
   var inputPriceFormElement = adForm.querySelector('#price');
@@ -150,7 +150,7 @@
 
   resetElement.addEventListener('click', function () {
     pageReset();
-    window.pin.mainPinElement.addEventListener('mouseup', window.pin.elementClickHandler);
+    mainPinElement.addEventListener('mouseup', window.pin.elementClickHandler);
   });
 
   // Появление и закрытие окна об успешной отправке формы
@@ -196,7 +196,7 @@
   var errorHandler = function (errorMessage) {
     errorMsgElement.classList.remove('hidden');
     errorMsgInsideElement.textContent = errorMessage + ' Пожалуйста, попробуйте повторить позже';
-    closeerrorMsgElement.addEventListener('click', closeErrorMessageClickHandler);
+    closeErrorMsgElement.addEventListener('click', closeErrorMessageClickHandler);
     document.addEventListener('keydown', closeErrorMessageEscPressHandler);
   };
 

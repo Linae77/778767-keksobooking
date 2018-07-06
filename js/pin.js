@@ -7,7 +7,7 @@
   var MAIN_PIN_HEIGHT = 65;
   var MAIN_PIN_TIP = 22;
   var MAIN_PIN_Y_START = 570;
-  var MAIN_PIN_Y_START = 375;
+  var MAIN_PIN_X_START = 375;
   var COORD_X_MIN = 0;
   var COORD_X_MAX = 1200;
   var COORD_Y_MIN = 130;
@@ -24,9 +24,6 @@
   var adForm = document.querySelector('.ad-form');
   var adFormFieldset = adForm.querySelectorAll('fieldset');
   var inputAddress = adForm.querySelector('#address');
-
-  mainPinElement.addEventListener('mousedown', mouseDownHandler);
-  mainPinElement.addEventListener('mouseup', mouseClickHandler);
 
   window.pin = {
     mainPinElement: mainPinElement,
@@ -63,8 +60,8 @@
     loadHandler: function (ads) {
       var fragment = document.createDocumentFragment();
       for (var i = 0; i < ads.length; i++) {
-      fragment.appendChild(renderPin(ads[i]));
-      mapPins.appendChild(fragment);
+        fragment.appendChild(window.pin.renderPin(ads[i]));
+        mapPins.appendChild(fragment);
       }
     },
 
@@ -154,8 +151,8 @@
           x: moveEvt.clientX,
           y: moveEvt.clientY
         };
-        mainPinElement.style.top = getPinPosition(mainPinElement.offsetTop, shift.y, minCoord.y, maxCoord.y) + 'px';
-        mainPinElement.style.left = getPinPosition(mainPinElement.offsetLeft, shift.x, minCoord.x, maxCoord.x) + 'px';
+        mainPinElement.style.top = window.pin.getPinPosition(mainPinElement.offsetTop, shift.y, minCoord.y, maxCoord.y) + 'px';
+        mainPinElement.style.left = window.pin.getPinPosition(mainPinElement.offsetLeft, shift.x, minCoord.x, maxCoord.x) + 'px';
         window.pin.getAddress();
       };
       var mouseUpHandler = function (upEvt) {
@@ -177,7 +174,7 @@
 
     // Удаление меток похожих объявлений с карты
     removePinsElements: function () {
-      var pinElement = pinsLocationElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+      var pinElement = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
       for (var i = 0; i < pinElement.length; i++) {
         mapPins.removeChild(pinElement[i]);
       }

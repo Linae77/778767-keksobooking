@@ -3,15 +3,9 @@
 (function () {
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
-  var mapElement = document.querySelector('.map');
-  var adForm = document.querySelector('.ad-form');
-  var mainPinElement = document.querySelector('.map__pin--main');
 
   window.utils = {
     ESC_KEYCODE: ESC_KEYCODE,
-    mapElement: mapElement,
-    formElement: formElement,
-    mainPinElement: mainPinElement,
 
     // Функции нажатия горячих клавиш
     isEscKeycode: function (evt, action) {
@@ -57,7 +51,7 @@
       var n = window.utils.getRandomInt(1, array.length); // случайное количество элементов массива
       var randomArray = [];
       for (var i = 0; i < n; i++) {
-        randomArray[i] = array[getArray(0, array.length - 1)[i]];
+        randomArray[i] = array[window.utils.getArray(0, array.length - 1)[i]];
       }
       return randomArray;
     }

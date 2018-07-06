@@ -1219,6 +1219,26 @@ fieldset {
 }
 
 .ad-form .invalid {
-  border: 3px solid red !important;
+  border: 4px solid red !important;
   border-radius: 10px !important;
+};
+
+.error {
+  position: fixed;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  margin-left: -200px;
+  padding: 30px;
+  color: *#000;
+  font-size: 18px;
+  text-align: center;
+  border: 4px solid rgb(181, 181, 181);
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
 }

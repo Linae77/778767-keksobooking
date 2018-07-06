@@ -36,6 +36,10 @@
   var inputRoomsFormElement = adForm.querySelector('#room_number');
   var inputCapacityFormElement = adForm.querySelector('#capacity');
   var resetElement = adForm.querySelector('.ad-form__reset');
+  var successMsgElement = document.querySelector('.success');
+  var errorMsgElement = document.querySelector('.error');
+  var errorMsgInsideElement = document.querySelector('.error__message');
+  var closeErrorMsgElement = errorMsgElement.querySelector('.popup__close');
 
   // Валидация формы
   // Добавление рамки невалидным полям
@@ -131,5 +135,60 @@
     adForm.reset();
   });
 
+  // Появление и закрытие окна об успешном заполнении формы
+  var closeSuccessMessage = function () {
+    successMsgElement.classList.add('hidden');
+    document.removeEventListener(successMessageEscPressHandler);
+    document.removeEventListener('click', successMessageClickHandler);
+    document.removeEventListener('keydown', successElementEscPressHandler);
+  };
+
+  var successMessageEscPressHandler = function (evt) {
+    window.utils.isEscKeycode(evt, closeSuccessMessage);
+  };
+
+  var successMessageClickHandler = function () {
+    closeSuccessMessage();
+  };
+
+  // Закрытие сообщения об ошибке
+  var closeErrorMessage = function () {
+    errorMsgElement.classList.add('hidden');
+    closeerrorMsgElement.removeEventListener('click', closeErrorMessageClickHandler);
+    document.removeEventListener('keydown', closeErrorMessageEscPressHandler);
+  };
+
+  var closeErrorMessageClickHandler = function () {
+    closeErrorMessage();
+  };
+
+  var closeErrorMessageEscPressHandler = function (evt) {
+    window.utils.isEscKeycode(evt, closeErrorMessage);
+  };
+
+  // Обработчик успешной загрузки
+  var loadHandler = function () {
+    pageReset();
+    mainPinElement.addEventListener('mouseup', window.mainPin.elementClickHandler);
+    successMsgElement.classList.remove('hidden');
+    document.addEventListener('click', successMessageClickHandler);
+    document.addEventListener('keydown', successMessageEscPressHandler);
+  };
+
+  // Обработчик ошибки
+  var errorHandler = function (errorMessage) {
+    errorMsgElement.classList.remove('hidden');
+    errorMsgInsideElement.textContent = errorMessage + ' Пожалуйста, попробуйте повторить позже';
+    closeerrorMsgElement.addEventListener('click', closeErrorMessageClickHandler);
+    document.addEventListener('keydown', closeErrorMessageEscPressHandler);
+  };
+
+  // Обработчик отправки формы
+  var formElementSubmitHandler = function (evt) {
+    window.backend.save(new FormData(formElement), loadHandler, errorHandler);
+    evt.preventDefault();
+  };
+
+  formElement.addEventListener('submit', formElementSubmitHandler);
 })();
 

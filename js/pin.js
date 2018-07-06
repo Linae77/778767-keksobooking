@@ -26,6 +26,7 @@
   var inputAddress = adForm.querySelector('#address');
 
   window.pin = {
+    isPinActive: isPinActive,
     mainPinElement: mainPinElement,
     // Функция создания по шаблону DOM-элемента метки на картке
     renderPin: function (pin) {
@@ -42,7 +43,7 @@
         }
         window.card.openMapCard(pin);
         pinElement.classList.add('map__pin--active');
-        isPinActive = true;
+        window.pin.isPinActive = true;
 
       });
       return pinElement;
@@ -168,7 +169,8 @@
     mouseClickHandler: function () {
       window.pin.activate();
       window.pin.getAddress();
-      window.backend.load(window.pin.loadHandler, window.pin.errorHandler);
+      window.filters.disableFilters();
+      window.backend.load(window.filters.successHandler, window.filters.errorHandler);
       mainPinElement.removeEventListener('mouseup', window.pin.mouseClickHandler);
     },
 
@@ -184,6 +186,15 @@
     resetPin: function () {
       mainPinElement.style.top = MAIN_PIN_Y_START + 'px';
       mainPinElement.style.left = MAIN_PIN_X_START + 'px';
-    }
+    },
+
+    // Удаление у метки класса active при наличии
+    removeActiveClass: function () {
+      if (window.pin.isPinActive) {
+        var pinActiveElement = pinsLocationElement.querySelector('.map__pin--active');
+        pinActiveElement.classList.remove('map__pin--active');
+        window.util.isPinActive = false;
+      }
+    };
   };
 })();

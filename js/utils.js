@@ -54,6 +54,17 @@
         randomArray[i] = array[window.utils.getArray(0, array.length - 1)[i]];
       }
       return randomArray;
+    },
+
+    // Функция для устранения дребезга
+    debounce: function () {
+      var DEBOUNCE_INTERVAL = 500;
+      var lastTimeout = null;
+      window.debounce = function (f) {
+        if (lastTimeout) {
+          window.clearTimeout(lastTimeout);
+        }
+        lastTimeout = window.setTimeout(f, DEBOUNCE_INTERVAL);
     }
   };
 })();

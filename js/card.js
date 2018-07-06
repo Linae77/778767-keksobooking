@@ -8,6 +8,7 @@
   var mapFilters = mapElement.querySelector('.map__filters-container');
   var mapElement = window.data.mapElement;
   var mapCardElement = document.querySelector('.map__card');
+  var filtersContainerElement = mapElement.querySelector('.map__filters-container');
   var ESC_KEYCODE = 27;
 
   // Закрытие карточки объявления по нажатию на esc

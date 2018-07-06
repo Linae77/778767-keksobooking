@@ -156,7 +156,7 @@
   // Появление и закрытие окна об успешной отправке формы
   var closeSuccessMessage = function () {
     successMsgElement.classList.add('hidden');
-    document.removeEventListener(successMessageEscPressHandler);
+    document.removeEventListener('keydown', successMessageEscPressHandler);
     document.removeEventListener('click', successMessageClickHandler);
   };
 

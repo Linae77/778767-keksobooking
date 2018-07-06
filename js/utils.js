@@ -66,5 +66,5 @@
         }
         lastTimeout = window.setTimeout(f, DEBOUNCE_INTERVAL);
     }
-  };
+  }
 })();

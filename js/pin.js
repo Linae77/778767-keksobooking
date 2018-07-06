@@ -195,6 +195,6 @@
         pinActiveElement.classList.remove('map__pin--active');
         window.util.isPinActive = false;
       }
-    };
+    }
   };
 })();

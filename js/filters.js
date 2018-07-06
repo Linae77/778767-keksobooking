@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-    var Price = {
+  var Price = {
     MIDDLE: 'middle',
     LOW: 'low',
     HIGH: 'high'
@@ -17,8 +17,8 @@
   var filterRooms = filtersBlock.querySelector('#housing-rooms');
   var filterGuests = filtersBlock.querySelector('#housing-guests');
   var filterFeatures = filtersBlock.querySelector('#housing-features');
-  //var selectFilterElements = filtersBlock.querySelectorAll('select');
-  //var inputFilterElements = filtersBlock.querySelectorAll('input');
+  // var selectFilterElements = filtersBlock.querySelectorAll('select');
+  // var inputFilterElements = filtersBlock.querySelectorAll('input');
 
   // Начальное состояние фильтров, состояние после сброса
   var disableFilters = function () {
@@ -76,7 +76,7 @@
   };
 
   // Фильтрация по всем параметрам
-  var sorting = function () {
+  var filtersChangeHandler = function () {
     filterByValue(filterType, 'type');
     filterByValue(filterRooms, 'rooms');
     filterByValue(filterGuests, 'guests');
@@ -91,7 +91,7 @@
     window.pin.removeActiveClass();
     window.pin.remove();
     window.popup.closeIfOpen();
-    sorting();
+    filtersChangeHandler();
     window.pin.render(filteredAds);
   };
 
@@ -130,5 +130,5 @@
     disableFilters: disableFilters,
     successHandler: successHandler,
     errorHandler: errorHandler
-  };
+  };-
 })();

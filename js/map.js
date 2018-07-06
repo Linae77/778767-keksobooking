@@ -12,13 +12,13 @@
   var mapElement = document.querySelector('.map');
   var mainPinElement = document.querySelector('.map__pin--main');
   var adForm = document.querySelector('.ad-form');
-  var adFormFieldset = window.data.adForm.querySelectorAll('fieldset');
-  var inputAddress = window.data.adForm.querySelector('#address');
+  var adFormFieldset = adForm.querySelectorAll('fieldset');
+  var inputAddress = adForm.querySelector('#address');
 
   // Функция активации карты
-  window.activateMap = function () {
+  var activateMap = function () {
     mapElement.classList.remove('map--faded');
-    window.data.adForm.classList.remove('ad-form--disabled');
+    adForm.classList.remove('ad-form--disabled');
     // удаление атрибутов disabled у полей формы
     for (var i = 0; i < adFormFieldset.length; i++) {
       adFormFieldset[i].disabled = false;
@@ -26,9 +26,9 @@
   };
 
   // Функция дезактивации карты
-  window.inactivateMap = function () {
+  var inactivateMap = function () {
     mapElement.classList.add('map--faded');
-    window.data.adForm.classList.add('ad-form--disabled');
+    adForm.classList.add('ad-form--disabled');
     // добавление атрибутов disabled полям формы
     for (var i = 0; i < adFormFieldset.length; i++) {
       adFormFieldset[i].disabled = true;
@@ -36,7 +36,7 @@
   };
 
   // Получение адреса метки на карте
-  window.getAddress = function () {
+  var getAddress = function () {
     var addressX = Math.round(mainPinElement.offsetLeft + MAIN_PIN_WIDTH / 2);
     var addressY = Math.round(mainPinElement.offsetTop + MAIN_PIN_HEIGHT / 2);
     var coord = {
@@ -89,7 +89,7 @@
       };
       mainPinElement.style.top = getPinPosition(mainPinElement.offsetTop, shift.y, minCoord.y, maxCoord.y) + 'px';
       mainPinElement.style.left = getPinPosition(mainPinElement.offsetLeft, shift.x, minCoord.x, maxCoord.x) + 'px';
-      window.getAddress();
+      window.map.getAddress();
     };
     var mouseUpHandler = function (upEvt) {
       upEvt.preventDefault();
@@ -102,14 +102,20 @@
 
   // Обработчик нажатия на метку без перемещения
   var mouseClickHandler = function () {
-    window.activateMap();
-    window.getAddress();
+    window.map.activate();
+    window.map.getAddress();
     window.pin.fillMap();
     mainPinElement.removeEventListener('mouseup', mouseClickHandler);
   };
 
   mainPinElement.addEventListener('mousedown', mouseDownHandler);
   mainPinElement.addEventListener('mouseup', mouseClickHandler);
+
+  window.map = {
+    activate: activateMap,
+    inactivate: inactivateMap,
+    getAddress: getAddress
+  } ;
 })();
 
 

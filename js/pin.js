@@ -17,13 +17,13 @@
     pinAvatarElement.querySelector('.map').src = pin.author.avatar;
     pinAvatarElement.querySelector('.map').alt = pin.offer.title;
     pinElement.addEventListener('click', function () {
-      openMapCard(pin);
+      window.card.openMapCard(pin);
     });
     return pinElement;
   };
 
   // Удаление меток похожих объявлений с карты
-  window.clearMap = function () {
+  var clearMap = function () {
     var pinElement = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pinElement.length; i++) {
       mapPins.removeChild(pinElement[i]);

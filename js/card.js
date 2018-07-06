@@ -11,7 +11,7 @@
   var ESC_KEYCODE = 27;
 
   // Закрытие карточки объявления по нажатию на esc
-  window.onCardEscPressHandler = function (evt) {
+  var onCardEscPressHandler = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       window.card.close();
     }
@@ -108,14 +108,15 @@
   };
 
   // Закрытие формы с объявлением
-  window.closeMapCard = function () {
+  var closeMapCard = function () {
     mapElement.removeChild(mapCardElement);
-    document.removeEventListener('keydown', window.onCardEscPressHandler );
+    document.removeEventListener('keydown', window.onCardEscPressHandler);
   };
 
   window.card = {
-    close: closeMapCard,
+    mapCardElement: mapCardElement,
     open: openMapCard,
-    mapCardElement: mapCardElement
+    close: closeMapCard,
+    onCardEscPressHandler: onCardEscPressHandler
   };
 })();

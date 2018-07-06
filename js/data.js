@@ -24,12 +24,7 @@
     'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
-   var ads = [];
-
-  window.data = {
-    ADS_NUMBER: ADS_NUMBER,
-    ads: ads
-  };
+  var ads = [];
 
   // Вспомогательные функции1
   // Генерация случайного целого в заданном диапазоне
@@ -74,7 +69,7 @@
   };
 
   // Функция создания основного массива объявлений
-  window.renderAds = function () {
+  var renderAds = function () {
     var number = ADS_NUMBER;
     var mainItems = [];
     var TITLES_INDEXES = getRandomIndexArray(TITLES); // массив уникальных индексов TITLES в случайном порядке
@@ -104,4 +99,9 @@
     return mainItems;
   };
 
+  window.data = {
+    renderAds: renderAds,
+    ADS_NUMBER: ADS_NUMBER,
+    ads: ads
+  };
 })();

@@ -1,12 +1,7 @@
 'use strict';
 
 (function () {
-  var PriceRange = {
-    FIRST_POINT: 10000,
-    SECOND_POINT: 50000
-  };
-
-  var Price = {
+    var Price = {
     MIDDLE: 'middle',
     LOW: 'low',
     HIGH: 'high'
@@ -22,8 +17,8 @@
   var filterRooms = filtersBlock.querySelector('#housing-rooms');
   var filterGuests = filtersBlock.querySelector('#housing-guests');
   var filterFeatures = filtersBlock.querySelector('#housing-features');
-  var selectFilterElements = filtersBlock.querySelectorAll('select');
-  var inputFilterElements = filtersBlock.querySelectorAll('input');
+  //var selectFilterElements = filtersBlock.querySelectorAll('select');
+  //var inputFilterElements = filtersBlock.querySelectorAll('input');
 
   // Начальное состояние фильтров, состояние после сброса
   var disableFilters = function () {
@@ -55,7 +50,7 @@
   };
 
   // Проверка соотвествия значения фильтра значению цены объявления
-  var checkPrice = function (array) {
+  var checkPrice = function (item) {
     var priceLimits = {
       'middle': item.offer.price >= Price.LOW && item.offer.price <= Price.HIGH,
       'low': item.offer.price < Price.LOW,
@@ -134,6 +129,6 @@
     activateFilters: activateFilters,
     disableFilters: disableFilters,
     successHandler: successHandler,
-    errorHandler: errorHandler,
-    }
+    errorHandler: errorHandler
+  };
 })();

@@ -244,20 +244,20 @@ var fillMap = function () {
 
 // Функция создания по шаблону DOM-элемента объявления
 var renderMapCard = function (ad) {
-  var mapCardElement = cardTemplate.cloneNode(true);
-  mapCardElement.querySelector('.popup__title').textContent = ad.offer.title;
-  mapCardElement.querySelector('.popup__text--address').textContent = ad.offer.address;
-  mapCardElement.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
-  mapCardElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
-  mapCardElement.querySelector('.popup__text--time').textContent = 'Заезд после' + ad.offer.checkin + ', выезд до' + ad.offer.checkout;
-  mapCardElement.querySelector('.popup__description').textContent = ad.offer.description;
-  mapCardElement.querySelector('.popup__avatar').src = ad.author.avatar;
-  var popupCloseElement = mapCardElement.querySelector('.popup__close');
+  var mapCard = cardTemplate.cloneNode(true);
+  mapCard.querySelector('.popup__title').textContent = ad.offer.title;
+  mapCard.querySelector('.popup__text--address').textContent = ad.offer.address;
+  mapCard.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
+  mapCard.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
+  mapCard.querySelector('.popup__text--time').textContent = 'Заезд после' + ad.offer.checkin + ', выезд до' + ad.offer.checkout;
+  mapCard.querySelector('.popup__description').textContent = ad.offer.description;
+  mapCard.querySelector('.popup__avatar').src = ad.author.avatar;
+  var popupCloseElement = mapCard.querySelector('.popup__close');
   popupCloseElement.addEventListener('click', function () {
     closeMapCard();
   });
   document.addEventListener('keydown', onMapCardEscPress);
-  return mapCardElement;
+  return mapCard;
 };
 
 // Функция помещения объявления в разметку: открываем объявление, закрываем ранее открытое при наличии

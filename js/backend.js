@@ -12,7 +12,7 @@
         case 200:
           onLoad(xhr.response);
           break;
-        case 400:ss
+        case 400:
           onError('Неверный запрос: ' + xhr.status + ' ' + xhr.statusText);
           break;
         case 401:

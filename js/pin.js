@@ -29,6 +29,7 @@
   mainPinElement.addEventListener('mouseup', mouseClickHandler);
 
   window.pin = {
+    mainPinElement: mainPinElement,
     // Функция создания по шаблону DOM-элемента метки на картке
     renderPin: function (pin) {
       var pinElement = pinTemplate.cloneNode(true);
@@ -186,7 +187,6 @@
     resetPin: function () {
       mainPinElement.style.top = MAIN_PIN_Y_START + 'px';
       mainPinElement.style.left = MAIN_PIN_X_START + 'px';
-    };
-
+    }
   };
 })();

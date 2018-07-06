@@ -135,12 +135,29 @@
     adForm.reset();
   });
 
-  // Появление и закрытие окна об успешном заполнении формы
+  // Сброс страницы в начальное состояние
+  var pageReset = function () {
+    window.pin.inactivateMap();
+    window.pin.removePinsElements();
+    var popupElement = mapElement.querySelector('.map__card');
+    if (popupElement) {
+      window.card.closeMapCard();
+    }
+    adForm.resetPin();
+    window.pin.resetPin();
+    window.pin.getAddress();
+  };
+
+  resetElement.addEventListener('click', function () {
+    pageReset();
+    window.pin.mainPinElement.addEventListener('mouseup', window.pin.elementClickHandler);
+  });
+
+  // Появление и закрытие окна об успешной отправке формы
   var closeSuccessMessage = function () {
     successMsgElement.classList.add('hidden');
     document.removeEventListener(successMessageEscPressHandler);
     document.removeEventListener('click', successMessageClickHandler);
-    document.removeEventListener('keydown', successElementEscPressHandler);
   };
 
   var successMessageEscPressHandler = function (evt) {
@@ -154,7 +171,7 @@
   // Закрытие сообщения об ошибке
   var closeErrorMessage = function () {
     errorMsgElement.classList.add('hidden');
-    closeerrorMsgElement.removeEventListener('click', closeErrorMessageClickHandler);
+    closeErrorMsgElement.removeEventListener('click', closeErrorMessageClickHandler);
     document.removeEventListener('keydown', closeErrorMessageEscPressHandler);
   };
 
@@ -169,7 +186,7 @@
   // Обработчик успешной загрузки
   var loadHandler = function () {
     pageReset();
-    mainPinElement.addEventListener('mouseup', window.mainPin.elementClickHandler);
+    mainPinElement.addEventListener('mouseup', window.pin.elementClickHandler);
     successMsgElement.classList.remove('hidden');
     document.addEventListener('click', successMessageClickHandler);
     document.addEventListener('keydown', successMessageEscPressHandler);
@@ -185,10 +202,10 @@
 
   // Обработчик отправки формы
   var formElementSubmitHandler = function (evt) {
-    window.backend.save(new FormData(formElement), loadHandler, errorHandler);
+    window.backend.submit(new FormData(adForm), loadHandler, errorHandler);
     evt.preventDefault();
   };
 
-  formElement.addEventListener('submit', formElementSubmitHandler);
+  adForm.addEventListener('submit', formElementSubmitHandler);
 })();
 

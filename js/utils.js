@@ -8,7 +8,7 @@
   var mainPinElement = document.querySelector('.map__pin--main');
 
   window.utils = {
-    ESC_KEYCODE: ESC_KEYCODE
+    ESC_KEYCODE: ESC_KEYCODE,
     mapElement: mapElement,
     formElement: formElement,
     mainPinElement: mainPinElement,

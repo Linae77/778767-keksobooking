@@ -9,20 +9,16 @@
   var COORD_Y_MAX = 630;
 
   // Необходимые элементы
-  var adFormFieldset = adForm.querySelectorAll('fieldset');
-  var inputAddress = adForm.querySelector('#address');
-
-  // Закрытие формы по нажатию на esc
-  var onCardEscPressHandler = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      window.card.close();
-    }
-  };
+  var mapElement = document.querySelector('.map');
+  var mainPinElement = document.querySelector('.map__pin--main');
+  var adForm = document.querySelector('.ad-form');
+  var adFormFieldset = window.data.adForm.querySelectorAll('fieldset');
+  var inputAddress = window.data.adForm.querySelector('#address');
 
   // Функция активации карты
-  var activateMap = function () {
+  window.activateMap = function () {
     mapElement.classList.remove('map--faded');
-    adForm.classList.remove('ad-form--disabled');
+    window.data.adForm.classList.remove('ad-form--disabled');
     // удаление атрибутов disabled у полей формы
     for (var i = 0; i < adFormFieldset.length; i++) {
       adFormFieldset[i].disabled = false;
@@ -30,9 +26,9 @@
   };
 
   // Функция дезактивации карты
-  var inactivateMap = function () {
+  window.inactivateMap = function () {
     mapElement.classList.add('map--faded');
-    adForm.classList.add('ad-form--disabled');
+    window.data.adForm.classList.add('ad-form--disabled');
     // добавление атрибутов disabled полям формы
     for (var i = 0; i < adFormFieldset.length; i++) {
       adFormFieldset[i].disabled = true;
@@ -40,7 +36,7 @@
   };
 
   // Получение адреса метки на карте
-  var getAddress = function () {
+  window.getAddress = function () {
     var addressX = Math.round(mainPinElement.offsetLeft + MAIN_PIN_WIDTH / 2);
     var addressY = Math.round(mainPinElement.offsetTop + MAIN_PIN_HEIGHT / 2);
     var coord = {
@@ -93,7 +89,7 @@
       };
       mainPinElement.style.top = getPinPosition(mainPinElement.offsetTop, shift.y, minCoord.y, maxCoord.y) + 'px';
       mainPinElement.style.left = getPinPosition(mainPinElement.offsetLeft, shift.x, minCoord.x, maxCoord.x) + 'px';
-      getAddress();
+      window.getAddress();
     };
     var mouseUpHandler = function (upEvt) {
       upEvt.preventDefault();
@@ -106,9 +102,9 @@
 
   // Обработчик нажатия на метку без перемещения
   var mouseClickHandler = function () {
-    activateMap();
-    getAddress();
-    fillMap();
+    window.activateMap();
+    window.getAddress();
+    window.pin.fillMap();
     mainPinElement.removeEventListener('mouseup', mouseClickHandler);
   };
 

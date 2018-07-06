@@ -25,9 +25,9 @@
   };
 
   // Элементы формы карточки объявления
-  var mapElement = window.data.mapElement;
+
   var adForm = window.data.adForm;
-  var mainPinElement = window.data.mainPinElement;
+
   var inputTitleFormElement = adForm.querySelector('#title');
   var inputTypeFormElement = adForm.querySelector('#type');
   var inputPriceFormElement = adForm.querySelector('#price');
@@ -122,11 +122,11 @@
   adForm.addEventListener('invalid', fieldInvalidHandler, true);
 
   resetElement.addEventListener('click', function () {
-    inactivateMap();
-    getAddress();
-    clearMap();
-    if (mapCardElement) {
-      closeMapCard();
+    window.map.inactivateMap();
+    window.map.getAddress();
+    window.pin.clearMap();
+    if (window.card.mapCardElement) {
+      window.map.closeMapCard();
     }
     adForm.reset();
   });

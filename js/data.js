@@ -24,23 +24,11 @@
     'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
-  var mapElement = document.querySelector('.map');
-  var mainPinElement = document.querySelector('.map__pin--main');
-  var adForm = document.querySelector('.ad-form');
-  var ads = [];
-  var ESC_KEYCODE = 27;
+   var ads = [];
 
   window.data = {
-    ads: ads,
-    mapElement: mapElement,
-    adForm: adForm,
-    mainPinElement: mainPinElement,
-
-    performActionIfEscEvent: function (evt, action) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        action ();
-      }
-    }
+    ADS_NUMBER: ADS_NUMBER,
+    ads: ads
   };
 
   // Вспомогательные функции1
@@ -53,7 +41,7 @@
   var getArray = function (min, max) {
     var array = [];
     for (var i = min; i < max; i++) {
-      array.push(i)
+      array.push(i);
     }
     return array;
   };
@@ -63,7 +51,7 @@
     var n = getRandomInt(1, array.length); // случайное количество элементов массива
     var randomArray = [];
     for (var i = 0; i < n; i++) {
-      randomArray[i] = array[getUniqueRandoms(0, array.length - 1, n)[i]];
+      randomArray[i] = array[getArray(0, array.length - 1)[i]];
     }
     return randomArray;
   };

@@ -23,14 +23,14 @@
   };
 
   // Удаление меток похожих объявлений с карты
-  var clearMap = function () {
+  window.clearMap = function () {
     var pinElement = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pinElement.length; i++) {
       mapPins.removeChild(pinElement[i]);
     }
   };
 
-  // Заполнение карты DOM-элементами на основе массива с объектами
+  // Заполнение карты метками на основе массива объявлений ads
   var fillMap = function () {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < window.data.ads.length; i++) {
@@ -43,7 +43,5 @@
     renderPin: renderPin,
     clearMap: clearMap,
     fillMap: fillMap
-  },
-
+  };
 })();
-

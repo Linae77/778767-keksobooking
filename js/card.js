@@ -8,6 +8,14 @@
   var mapFilters = mapElement.querySelector('.map__filters-container');
   var mapElement = window.data.mapElement;
   var mapCardElement = document.querySelector('.map__card');
+  var ESC_KEYCODE = 27;
+
+  // Закрытие карточки объявления по нажатию на esc
+  window.onCardEscPressHandler = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      window.card.close();
+    }
+  };
 
   // Получение типа жилья
   var getАccommodationType = function (type) {
@@ -87,7 +95,7 @@
     popupCloseElement.addEventListener('click', function () {
       window.card.close();
     });
-    document.addEventListener('keydown', onCardEscPressHandler);
+    document.addEventListener('keydown', window.onCardEscPressHandler);
     return mapCard;
   };
 
@@ -100,13 +108,14 @@
   };
 
   // Закрытие формы с объявлением
-  var closeMapCard = function () {
+  window.closeMapCard = function () {
     mapElement.removeChild(mapCardElement);
-    document.removeEventListener('keydown', onMapCardEscPress);
+    document.removeEventListener('keydown', window.onCardEscPressHandler );
   };
 
   window.card = {
     close: closeMapCard,
-    open: openMapCard
+    open: openMapCard,
+    mapCardElement: mapCardElement
   };
 })();

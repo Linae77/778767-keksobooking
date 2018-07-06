@@ -2,7 +2,7 @@
 
 (function () {
   // подготовка xhr
-  var prepareXhr = function (onSuccess, onError) {
+  var prepareXhr = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.timeout = 10000;
     xhr.responseType = 'json';
@@ -10,9 +10,9 @@
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
         case 200:
-          onSuccess(xhr.response);
+          onLoad(xhr.response);
           break;
-        case 400:
+        case 400:ss
           onError('Неверный запрос: ' + xhr.status + ' ' + xhr.statusText);
           break;
         case 401:
@@ -38,17 +38,17 @@
   };
 
   window.backend = {
-    load: function (onSuccess, onError) {
+    load: function (onLoad, onError) {
       var URL = 'https://js.dump.academy/keksobooking/data';
-      var xhr = prepareXhr(onSuccess, onError);
+      var xhr = prepareXhr(onLoad, onError);
 
       xhr.open('GET', URL);
       xhr.send();
     },
 
-    submit: function (data, onSuccess, onError) {
+    submit: function (data, onLoad, onError) {
       var URL = 'https://js.dump.academy/keksobooking';
-      var xhr = prepareXhr(onSuccess, onError);
+      var xhr = prepareXhr(onLoad, onError);
 
       xhr.open('POST', URL);
       xhr.send(data);

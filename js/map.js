@@ -66,7 +66,7 @@ var COORD_Y_MAX = 630;
 var mapElement = document.querySelector('.map');
 var mapFilters = mapElement.querySelector('.map__filters-container');
 var mainPinElement = document.querySelector('.map__pin--main');
-
+var mapCardElement = document.querySelector('.map__card');
 // Шаблон для создания карточки объявления
 var cardTemplate = document.querySelector('#pin__template').content.querySelector('.map__card');
 // Шаблон для создания меток на карте
@@ -265,9 +265,7 @@ var openMapCard = function (ad) {
   getАccommodationType(ad.offer.type);
   fillFeatures(ad.offer.features);
   fillPhotos(ad.offer.photos);
-  var fragment = document.createDocumentFragment();
-  var mapCard = mapElement.querySelector('.map__card');
-  if (mapCard) {
+  if (mapCardElement) {
     closeMapCard();
   }
   mapElement.insertBefore(renderMapCard(ad), mapFilters);
@@ -275,7 +273,6 @@ var openMapCard = function (ad) {
 
 // Закрытие формы с объявлением
 var closeMapCard = function () {
-  var mapCardElement = mapElement.querySelector('.map__card');
   mapElement.removeChild(mapCardElement);
   document.removeEventListener('keydown', onMapCardEscPress);
 };
@@ -350,18 +347,18 @@ var mouseDownHandler = function (evt) {
     y: evt.clientY
   };
   var mouseMoveHandler = function (moveEvt) {
-     moveEvt.preventDefault();
-     var shift = {
-       x: startCoords.x - moveEvt.clientX,
-       y: startCoords.y - moveEvt.clientY
-     };
-     startCoords = {
-       x: moveEvt.clientX,
-       y: moveEvt.clientY
-     };
-     mainPinElement.style.top = getPinPosition(mainPinElement.offsetTop, shift.y, minCoord.y, maxCoord.y) + 'px';
-     mainPinElement.style.left = getPinPosition(mainPinElement.offsetLeft, shift.x, minCoord.x, maxCoord.x) + 'px';
-     getAddress();
+    moveEvt.preventDefault();
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+    mainPinElement.style.top = getPinPosition(mainPinElement.offsetTop, shift.y, minCoord.y, maxCoord.y) + 'px';
+    mainPinElement.style.left = getPinPosition(mainPinElement.offsetLeft, shift.x, minCoord.x, maxCoord.x) + 'px';
+    getAddress();
   };
   var mouseUpHandler = function (upEvt) {
     upEvt.preventDefault();
@@ -373,15 +370,15 @@ var mouseDownHandler = function (evt) {
 };
 
 // Обработчик нажатия на метку без перемещения
-var mainPinElementClickHandler = function () {
+var mouseClickHandler = function () {
   activateMap();
   getAddress();
   fillMap();
-  mainPinElement.removeEventListener('mouseup', mainPinElementClickHandler);
+  mainPinElement.removeEventListener('mouseup', mouseClickHandler);
 };
 
 mainPinElement.addEventListener('mousedown', mouseDownHandler);
-mainPinElement.addEventListener('mouseup', mainPinElementClickHandler);
+mainPinElement.addEventListener('mouseup', mouseClickHandler);
 
 // Валидация формы
 // Добавление рамки невалидным полям
@@ -479,20 +476,17 @@ resetElement.addEventListener('click', function () {
   inactivateMap();
   getAddress();
   clearMap();
-  var popupElement = mapElement.querySelector('.map__card');
-  if (popupElement) {
+  if (mapCardElement) {
     closeMapCard();
   }
   adForm.reset();
 });
 
-// Функция активации страницы
+// Функция приведения страницы в начальное состояние
 var initiatePage = function () {
   ads = renderAds(ADS_NUMBER);
   inactivateMap();
   getAddress();
-  // Обработчик, активирующий страницу
-  mainPinElement.addEventListener('mouseup', onMoveMouseupHandler);
 };
 
 initiatePage();

@@ -169,7 +169,7 @@
       window.pin.activate();
       window.pin.getAddress();
       window.backend.load(window.pin.loadHandler, window.pin.errorHandler);
-      mainPinElement.removeEventListener('mouseup', mouseClickHandler);
+      mainPinElement.removeEventListener('mouseup', window.pin.mouseClickHandler);
     },
 
     // Удаление меток похожих объявлений с карты

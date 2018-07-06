@@ -95,7 +95,7 @@
     popupCloseElement.addEventListener('click', function () {
       window.card.close();
     });
-    document.addEventListener('keydown', window.onCardEscPressHandler);
+    document.addEventListener('keydown', window.card.onCardEscPressHandler);
     return mapCard;
   };
 
@@ -110,7 +110,7 @@
   // Закрытие формы с объявлением
   var closeMapCard = function () {
     mapElement.removeChild(mapCardElement);
-    document.removeEventListener('keydown', window.onCardEscPressHandler);
+    document.removeEventListener('keydown', window.card.onCardEscPressHandler);
   };
 
   window.card = {

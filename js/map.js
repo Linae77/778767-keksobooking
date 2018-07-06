@@ -115,7 +115,7 @@
     activate: activateMap,
     inactivate: inactivateMap,
     getAddress: getAddress
-  } ;
+  };
 })();
 
 
